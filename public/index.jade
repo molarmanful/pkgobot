@@ -1,0 +1,67 @@
+//output:index.html
+doctype html
+html
+  head
+    meta(charset='utf8')
+    title Pokemon GO Bot
+    style.
+      html,body{
+        height:100%;
+        margin:0;
+        padding:0;
+        font-family:monospace;
+      }
+      #m{
+        height:100%;
+      }
+      .p{
+        z-index:100;
+        position:fixed;
+        height:30%;
+        width:15%;
+        right:10px;
+        top:10px;
+      }
+      .p .b{
+        height:100%;
+        width:100%;
+        background-color:black;
+        opacity:.5;
+      }
+      #p{
+        position:absolute;
+        top:10px;
+        left:10px;
+        color:white;
+      }
+  body
+    .p
+      .b
+      #p
+    #m
+    script#a
+    script(src='https://code.jquery.com/jquery-3.1.0.min.js')
+    script.
+      var la,lo
+      $.get('/loc',x=>{
+        a.src=`https://maps.googleapis.com/maps/api/js?key=${x.key}&callback=init`
+        la=x.lat
+        lo=x.long
+      })
+      init=_=>{
+        map=new google.maps.Map(m,{
+          center:{lat:la,lng:lo},
+          zoom:20
+        })
+        mk=new google.maps.Marker({
+          position:{lat:la,lng:lo},
+          map:map,
+          label:'@'
+        })
+        setInterval(_=>{
+          $.get('/loc',x=>{
+            mk.setPosition({lat:x.lat,lng:x.long})
+            x.pk.length&&(p.innerHTML=x.stat+`<br><b>NEARBY POKEMON</b><br>`+x.pk.join`<br>`)
+          })
+        },500)
+      }

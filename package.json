@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/molarmanful/pkgobot/issues"
   },
-  "homepage": "https://github.com/molarmanful/pkgobot#readme"
+  "homepage": "https://github.com/molarmanful/pkgobot#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
