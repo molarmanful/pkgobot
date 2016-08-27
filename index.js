@@ -33,7 +33,7 @@ p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'googl
           x.MapPokemon.map(X=>{
             l('Catching',pk=p.pokemonlist[X.PokedexTypeId-1].name)
             p.EncounterPokemon(X,_=>{
-              l('A wild ',pk,'appeared!')
+              l('A wild',pk,'appeared!')
               stat='catching '+pk
               p.CatchPokemon(X,1,1.95,1,1,(a,b)=>{
                 l(st['ERR','Caught','Escaped','Fled','Missed'][b.Status])
