@@ -13,7 +13,7 @@ lvl=''
 stop=[]
 
 process.stdout.write('\033c')
-p.init(a[1],a[2],a[3]||{type:'name',name:'London'},a[4]||'google',e=>{
+p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'google',e=>{
   if(e)throw e;
   l('Location:',p.playerInfo.locationName+';','lat',p.playerInfo.latitude+',','long',p.playerInfo.longitude)
   p.GetProfile((e,P)=>{
