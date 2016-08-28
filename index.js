@@ -1,4 +1,4 @@
-p=require('pogobuf')
+p=require('pokemon-go-node-api')
 E=require('express')
 app=E()
 a=process.argv.slice(2)
