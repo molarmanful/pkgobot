@@ -4,7 +4,7 @@ A Pokémon GO bot created at /hack 2016.
 ![Sample Screenshot](https://github.com/molarmanful/pkgobot/blob/master/screenshot.png?raw=true)
 
 ##Installation
-Simply download the repo as a `.zip` file (or clone in desktop).
+Simply download the repo as a `.zip` file (or clone in desktop). Make sure you have Node.js v6 or higher installed on your system, and view the site in a modern browser with moderate ES6 support.
 
 ##Usage
 Make sure you have a Pokémon GO account already, preferably one that you are not using (to prevent any risk of your favorite account from getting banned).
