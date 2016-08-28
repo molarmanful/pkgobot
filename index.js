@@ -26,7 +26,7 @@ p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'googl
     app.use(E.static(__dirname+'/public'))
     app.get('/loc',(_,y)=>{
       y.setHeader('Content-Type','application/json')
-      y.json({user:P.username,coins:P.currency[0].amount,dust:P.currency[1].amount,key:a[0],lat:c().latitude,long:c().longitude,pk:Pk,stat:stat,pkmn:pkmn,egg:egg,lvl:lvl,item:item,stop:stop})
+      y.json({user:P.username,coins:P.currency[0].amount,dust:P.currency[1].amount,key:a[0],lat:c().latitude,lng:c().longitude,pk:Pk,stat:stat,pkmn:pkmn,egg:egg,lvl:lvl,item:item,stop:stop})
     })
     setInterval(_=>{
       p.GetInventory((e,i)=>{
