@@ -65,7 +65,7 @@
         setInterval(_=>{
           $.get('/loc',x=>{
             mk.setPosition({lat:x.lat,lng:x.long})
-            p.innerHTML=x.user+`<br>${x.coins||0}PkC / ${x.dust}SD<br>${x.stat}<br>---<br>${x.pk.join`<br>`}<br>---<br>${x.pkmn.join`<br>`}<br>${x.egg.join`<br>`}`
+            p.innerHTML=x.user+`, ${x.lvl}<br>${x.coins||0}PkC | ${x.dust}SD<br>${x.stat}<hr>${x.pk.join`<br>`}<hr>${x.pkmn.join`<br>`}<br>${x.egg.join`<br>`}`
           })
         },100)
       }

@@ -8,6 +8,7 @@ Pk=[]
 pkmn=[]
 egg=[]
 stat='walking'
+lvl=''
 
 process.stdout.write('\033c')
 p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'google',e=>{
@@ -23,9 +24,17 @@ p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'googl
     app.use(E.static(__dirname+'/public'))
     app.get('/loc',(_,y)=>{
       y.setHeader('Content-Type','application/json')
-      y.json({user:P.username,coins:P.currency[0].amount,dust:P.currency[1].amount,key:a[0],lat:c().latitude,long:c().longitude,pk:Pk,stat:stat,pkmn:pkmn,egg:egg})
+      y.json({user:P.username,coins:P.currency[0].amount,dust:P.currency[1].amount,key:a[0],lat:c().latitude,long:c().longitude,pk:Pk,stat:stat,pkmn:pkmn,egg:egg,lvl:lvl})
     })
     setInterval(_=>{
+      p.GetInventory((e,i)=>{
+        egg=[]
+        pkmn=[]
+        e||i.inventory_delta.inventory_items.map(x=>{
+          x.inventory_item_data.pokemon&&(x.inventory_item_data.pokemon.is_egg?egg.push(x.inventory_item_data.pokemon.egg_km_walked_target+' Egg'):pkmn.push(x.inventory_item_data.pokemon.cp+'CP '+p.pokemonlist[x.inventory_item_data.pokemon.pokemon_id-1].name))
+          x.inventory_item_data.player_stats&&(lvl='lvl'+x.inventory_item_data.player_stats.level)
+        })
+      })
       p.Heartbeat((e,m)=>{
         if(e)throw e;
         Pk=[]
@@ -43,16 +52,9 @@ p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'googl
           })
           x.Fort.map(X=>{
             X.FortType&&X.Enabled&&p.GetFort(X.FortId,X.Latitude,X.Longitude,(a,b)=>{
-              l(b,'Used PokeStop')
+              b&&b.result==1&&l(b,'Used PokeStop')
             })
           })
-        })
-      })
-      p.GetInventory((e,i)=>{
-        egg=[]
-        pkmn=[]
-        e||i.inventory_delta.inventory_items.map(x=>{
-          x.inventory_item_data.pokemon&&(x.inventory_item_data.pokemon.is_egg?egg.push(x.inventory_item_data.pokemon.egg_km_walked_target+' Egg'):pkmn.push(x.inventory_item_data.pokemon.cp+'CP '+p.pokemonlist[x.inventory_item_data.pokemon.pokemon_id-1].name))
         })
       })
     },5000)
