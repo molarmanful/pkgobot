@@ -1,7 +1,7 @@
 # pkgobot
 A Pokémon GO bot created at /hack 2016.
 
-![Sample Screenshot](https://github.com/molarmanful/ESMax/blob/master/screenshot.png?raw=true)
+![Sample Screenshot](https://github.com/molarmanful/pkgobot/blob/master/screenshot.png?raw=true)
 
 ##Installation
 Simply download the repo as a `.zip` file (or clone in desktop).
