@@ -61,7 +61,7 @@ p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'googl
           })
         })
       })
-    },5000)
+    },7000)
   })
   setInterval(_=>{
     p.SetLocation({

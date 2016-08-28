@@ -44,30 +44,148 @@ html
     script#a
     script(src='https://code.jquery.com/jquery-3.1.0.min.js')
     script.
-      var la,lo,pk
+      var la,lo,pk,st
+      P=[]
       $.get('/loc',x=>{
         a.src=`https://maps.googleapis.com/maps/api/js?key=${x.key}&callback=init`
         la=x.lat
         lo=x.lng
         pk=x.pk
+        st=x.stop
       })
       init=_=>{
         map=new google.maps.Map(m,{
           center:{lat:la,lng:lo},
-          zoom:20
+          zoom:20,
+          streetViewControl:false,
+          /*styles:[
+            {
+              "featureType":"all",
+              "elementType":"geometry",
+              "stylers":[
+                {
+                  "color": "#9CC5A1"
+                }
+              ]
+            },
+            {
+              "featureType":"all",
+              "elementType":"labels.text.fill",
+              "stylers":[
+                {
+                  "gamma": 0.01
+                },
+                {
+                  "lightness": 20
+                }
+              ]
+            },
+            {
+              "featureType":"all",
+              "elementType":"labels.text.stroke",
+              "stylers":[
+                {
+                  "saturation": -31
+                },
+                {
+                  "lightness": -33
+                },
+                {
+                  "weight": 2
+                },
+                {
+                  "gamma": 0.8
+                }
+              ]
+            },
+            {
+              "featureType":"all",
+              "elementType":"labels.icon",
+              "stylers":[
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType":"landscape",
+              "elementType":"geometry",
+              "stylers":[
+                {
+                  "lightness": 30
+                },
+                {
+                  "saturation": 30
+                }
+              ]
+            },
+            {
+              "featureType":"poi",
+              "elementType":"geometry",
+              "stylers":[
+                {
+                  "saturation": 20
+                }
+              ]
+            },
+            {
+              "featureType":"poi.park",
+              "elementType":"geometry",
+              "stylers":[
+                {
+                  "lightness": 20
+                },
+                {
+                  "saturation": -20
+                }
+              ]
+            },
+            {
+              "featureType":"road",
+              "elementType":"geometry",
+              "stylers":[
+                {
+                  "lightness":10
+                },
+                {
+                  "saturation":-30
+                }
+              ]
+            },
+            {
+              "featureType":"road",
+              "elementType":"geometry.stroke",
+              "stylers":[
+                {
+                  "saturation":25
+                },
+                {
+                  "lightness":25
+                }
+              ]
+            },
+            {
+              "featureType":"water",
+              "elementType":"all",
+              "stylers":[
+                  {
+                    "color": "#add8e6"
+                  }
+              ]
+            }
+          ],*/
+          mapTypeId: 'satellite'
         })
         mk=new google.maps.Marker({
+          icon:'trainer.gif',
           position:{lat:la,lng:lo},
           map:map,
-          label:'@'
         })
+        P=st.map((a,b)=>P[b]=new google.maps.Marker({icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',position:a,map:map}))
         setInterval(_=>{
-          P=[]
           $.get('/loc',x=>{
             mk.setPosition({lat:x.lat,lng:x.lng})
-            p.innerHTML=x.user+`, ${x.lvl}<br>${x.coins||0}PkC | ${x.dust}SD<br>${x.stat}<hr><b>NEARBY POKÉMON</b><br>${(x.pk.length?(pk=x.pk):pk).join`<br>`}<hr><b>BOT's POKÉMON</b><br>${x.pkmn.sort((a,b)=>b.replace(/^CP(\d+).*$/,'$1')-a.replace(/^CP(\d+).*$/,'$1')).join`<br>`}<br><hr><b>BOT's EGGS</b><br>${x.egg.sort((a,b)=>b.replace(/^(\d+).+$/,'$1')-a.replace(/^(\d+).+$/,'$1')).join`<br>`}<hr><b>ITEMS</b><br>${x.item.join`<br>`}<hr>${x.stop.length} STOPS NEARBY<hr>`
-            P.map(a=>a.setMap(null))
-            P=x.stop.map(a=>(a.label='P',new google.maps.Marker(a)))
+            p.innerHTML=x.user+`, ${x.lvl}<br>${x.coins||0}PkC | ${x.dust}SD<br>${x.stat}<hr><b>NEARBY POKÉMON</b><br>${(x.pk.length?(pk=x.pk):pk).join`<br>`}<hr><b>BOT's POKÉMON</b><br>${x.pkmn.sort((a,b)=>b.replace(/^CP(\d+).*$/,'$1')-a.replace(/^CP(\d+).*$/,'$1')).join`<br>`}<br><hr><b>BOT's EGGS</b><br>${x.egg.sort((a,b)=>b.replace(/^(\d+).+$/,'$1')-a.replace(/^(\d+).+$/,'$1')).join`<br>`}<hr><b>ITEMS</b><br>${x.item.join`<br>`}<hr>${x.stop.length} POKÉSTOPS NEARBY<hr>`
           })
         },100)
       }
