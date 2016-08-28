@@ -183,13 +183,24 @@
           position:{lat:la,lng:lo},
           map:map,
         })
-        P=st.map((a,b)=>P[b]=new google.maps.Marker({icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',position:a,map:map}))
+        P=st.map((a,b)=>P[b]=new google.maps.Marker({
+          icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+          position:a,
+          map:map
+        }))
         setInterval(_=>{
           $.get('/loc',x=>{
             mk.setPosition({lat:x.lat,lng:x.lng})
             p.innerHTML=x.user+`, ${x.lvl}<br>${x.coins||0}PkC | ${x.dust}SD<br>${x.stat}<hr><b>NEARBY POKÉMON</b><br>${(x.pk.length?(pk=x.pk):pk).join`<br>`}<hr><b>BOT's POKÉMON</b><br>${x.pkmn.sort((a,b)=>b.replace(/^CP(\d+).*$/,'$1')-a.replace(/^CP(\d+).*$/,'$1')).join`<br>`}<br><hr><b>BOT's EGGS</b><br>${x.egg.sort((a,b)=>b.replace(/^(\d+).+$/,'$1')-a.replace(/^(\d+).+$/,'$1')).join`<br>`}<hr><b>ITEMS</b><br>${x.item.join`<br>`}<hr>${x.stop.length} POKÉSTOPS NEARBY<hr>`
           })
         },100)
+        setInterval(_=>{
+          P=st.map((a,b)=>P[b]=new google.maps.Marker({
+            icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+            position:a,
+            map:map
+          }))
+        },30000)
       }
     </script>
   </body>
