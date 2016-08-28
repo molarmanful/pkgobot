@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/molarmanful/pkgobot#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "pogobuf": "^1.6.0"
   }
 }

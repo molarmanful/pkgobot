@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf8">
-    <title>Pokemon GO Bot</title>
+    <title>Pokémon GO Bot</title>
     <style>
       html,body{
         height:100%;
@@ -40,17 +40,18 @@
   <body>
     <div class="p">
       <div class="b"></div>
-      <div id="p"></div>
+      <pre id="p"></pre>
     </div>
     <div id="m"></div>
     <script id="a"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script>
-      var la,lo
+      var la,lo,pk
       $.get('/loc',x=>{
         a.src=`https://maps.googleapis.com/maps/api/js?key=${x.key}&callback=init`
         la=x.lat
-        lo=x.long
+        lo=x.lng
+        pk=x.pk
       })
       init=_=>{
         map=new google.maps.Map(m,{
@@ -63,9 +64,12 @@
           label:'@'
         })
         setInterval(_=>{
+          P=[]
           $.get('/loc',x=>{
-            mk.setPosition({lat:x.lat,lng:x.long})
-            p.innerHTML=x.user+`, ${x.lvl}<br>${x.coins||0}PkC | ${x.dust}SD<br>${x.stat}<hr>${x.pk.join`<br>`}<hr>${x.pkmn.join`<br>`}<br>${x.egg.join`<br>`}`
+            mk.setPosition({lat:x.lat,lng:x.lng})
+            p.innerHTML=x.user+`, ${x.lvl}<br>${x.coins||0}PkC | ${x.dust}SD<br>${x.stat}<hr><b>NEARBY POKÉMON</b><br>${(x.pk.length?(pk=x.pk):pk).join`<br>`}<hr><b>BOT's POKÉMON</b><br>${x.pkmn.sort((a,b)=>b.replace(/^CP(\d+).*$/,'$1')-a.replace(/^CP(\d+).*$/,'$1')).join`<br>`}<br><hr><b>BOT's EGGS</b><br>${x.egg.sort((a,b)=>b.replace(/^(\d+).+$/,'$1')-a.replace(/^(\d+).+$/,'$1')).join`<br>`}<hr><b>ITEMS</b><br>${x.item.join`<br>`}<hr>${x.stop.length} STOPS NEARBY<hr>`
+            P.map(a=>a.setMap(null))
+            P=x.stop.map(a=>(a.label='P',new google.maps.Marker(a)))
           })
         },100)
       }
