@@ -26,3 +26,6 @@ After successfully running the command, web output is hosted at `http://localhos
 2. Create a project, and in the "Library" tab at the sidebar, add the Google Maps Geocoder and Javascript APIs.
 3. Click the "Credentials" tab at the sidebar and click "Create credentials > API Key > Browser Key."
 4. Finish creating the browser key. You now have your API key!
+
+##Disclaimer
+This code uses really hacky techniques to achieve its purpose. Be wary that your bot is at risk of being soft-banned for suspicious activity. This was meant as an experiment in how a Pokémon GO would be made, not as a way for me to hack the game or play hands-free.
