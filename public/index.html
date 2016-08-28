@@ -16,14 +16,16 @@
       .p{
         z-index:100;
         position:fixed;
-        height:30%;
+        height:40%;
         width:15%;
         right:10px;
         top:10px;
+        overflow:auto;
       }
       .p .b{
-        height:100%;
-        width:100%;
+        height:40%;
+        width:15%;
+        position:fixed;
         background-color:black;
         opacity:.5;
       }
@@ -63,9 +65,9 @@
         setInterval(_=>{
           $.get('/loc',x=>{
             mk.setPosition({lat:x.lat,lng:x.long})
-            x.pk.length&&(p.innerHTML=x.stat+`<br><b>NEARBY POKEMON</b><br>`+x.pk.join`<br>`)
+            p.innerHTML=x.user+`<br>${x.coins||0}PkC / ${x.dust}SD<br>${x.stat}<br>---<br>${x.pk.join`<br>`}<br>---<br>${x.pkmn.join`<br>`}<br>${x.egg.join`<br>`}`
           })
-        },500)
+        },100)
       }
     </script>
   </body>

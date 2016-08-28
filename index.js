@@ -5,25 +5,26 @@ a=process.argv.slice(2)
 l=console.log
 c=p.GetLocationCoords
 Pk=[]
+pkmn=[]
+egg=[]
 stat='walking'
 
 process.stdout.write('\033c')
 p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'google',e=>{
   if(e)throw e;
-  app.use(E.static(__dirname+'/public'))
-  app.get('/loc',(_,y)=>{
-    y.setHeader('Content-Type','application/json')
-    y.json({key:a[0],lat:c().latitude,long:c().longitude,pk:Pk,stat:stat})
-  })
   l('Location:',p.playerInfo.locationName+';','lat',p.playerInfo.latitude+',','long',p.playerInfo.longitude)
   p.GetProfile((e,P)=>{
     if(e)throw e;
     l('Username:',P.username)
-    app.set('title',P.username)
     l('Poke storage:',P.poke_storage)
     l('Item storage:',P.item_storage)
     l('Pokecoins:',P.currency[0].amount)
     l('Stardust:',P.currency[1].amount)
+    app.use(E.static(__dirname+'/public'))
+    app.get('/loc',(_,y)=>{
+      y.setHeader('Content-Type','application/json')
+      y.json({user:P.username,coins:P.currency[0].amount,dust:P.currency[1].amount,key:a[0],lat:c().latitude,long:c().longitude,pk:Pk,stat:stat,pkmn:pkmn,egg:egg})
+    })
     setInterval(_=>{
       p.Heartbeat((e,m)=>{
         if(e)throw e;
@@ -34,13 +35,24 @@ p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'googl
             l('Catching',pk=p.pokemonlist[X.PokedexTypeId-1].name)
             p.EncounterPokemon(X,_=>{
               l('A wild',pk,'appeared!')
-              stat='catching '+pk
               p.CatchPokemon(X,1,1.95,1,1,(a,b)=>{
-                l(st['ERR','Caught','Escaped','Fled','Missed'][b.Status])
-                stat=`catching ${pk} - `+st
+                l(st=['ERR','Caught','Escaped','Fled','Missed'][b.Status])
+                stat=st=='Caught'||st=='ERR'?'walking':`catching ${pk} - `+st
               })
             })
           })
+          x.Fort.map(X=>{
+            X.FortType&&X.Enabled&&p.GetFort(X.FortId,X.Latitude,X.Longitude,(a,b)=>{
+              l(b,'Used PokeStop')
+            })
+          })
+        })
+      })
+      p.GetInventory((e,i)=>{
+        egg=[]
+        pkmn=[]
+        e||i.inventory_delta.inventory_items.map(x=>{
+          x.inventory_item_data.pokemon&&(x.inventory_item_data.pokemon.is_egg?egg.push(x.inventory_item_data.pokemon.egg_km_walked_target+' Egg'):pkmn.push(x.inventory_item_data.pokemon.cp+'CP '+p.pokemonlist[x.inventory_item_data.pokemon.pokemon_id-1].name))
         })
       })
     },5000)
@@ -54,7 +66,7 @@ p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'googl
         altitude:c().altitude
       }
     },_=>{})
-  },500)
+  },100)
 })
 
 app.listen(8080,'127.0.0.1')
