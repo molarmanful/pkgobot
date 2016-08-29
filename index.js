@@ -45,9 +45,8 @@ p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'googl
         m.cells.map(x=>{
           x.NearbyPokemon[0]&&Pk.push(p.pokemonlist[x.NearbyPokemon[0].PokedexNumber-1].name)
           x.MapPokemon.map(X=>{
-            l('Catching',pk=p.pokemonlist[X.PokedexTypeId-1].name)
+            l('catching',pk=p.pokemonlist[X.PokedexTypeId-1].name)
             p.EncounterPokemon(X,_=>{
-              l('A wild',pk,'appeared!')
               p.CatchPokemon(X,1,1.95,1,1,(a,b)=>{
                   b&&(st=['ERR','Caught','Escaped','Fled','Missed'][b.Status],stat=st=='Caught'||st=='ERR'?'walking':`catching ${pk} - `+st,l(stat))
               })
@@ -61,7 +60,7 @@ p.init(a[1],a[2],a[3]||{type:'name',name:'Galvanize San Francisco'},a[4]||'googl
           })
         })
       })
-    },7000)
+    },5000)
   })
   setInterval(_=>{
     p.SetLocation({
