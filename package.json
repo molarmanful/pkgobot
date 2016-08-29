@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/molarmanful/pkgobot#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "pogobuf": "^1.6.0",
-    "pokemon-go-node-api": "git+https://github.com/segura2010/Pokemon-GO-node-api.git"
+    "pokemon-go-node-api": "git+https://github.com/segura2010/Pokemon-GO-node-api.git",
+    "socket.io": "^1.4.8"
   }
 }
